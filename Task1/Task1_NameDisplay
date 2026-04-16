@@ -1,0 +1,26 @@
+                                          ; Program to display first name and last name on two separate lines
+
+
+dosseg
+.model small
+.stack 100h
+
+.data
+text db 'Muhammad',13,10,'Ilyas$'
+
+.code
+main proc
+
+mov ax, @data
+mov ds, ax
+
+; display full name (2 lines)
+mov dx, offset text
+mov ah, 9
+int 21h
+
+mov ah, 4Ch
+int 21h
+
+main endp
+end main
