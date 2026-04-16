@@ -1,0 +1,97 @@
+; Program to input two integers and perform addition, subtraction, multiplication and division, then display results
+
+dosseg
+.model small
+.stack 100h
+
+.data
+msgA db 'Input first digit: $'
+msgB db 13,10,'Input second digit: $'
+
+sumMsg db 13,10,'Sum = $'
+diffMsg db 13,10,'Diff = $'
+mulMsg db 13,10,'Mul = $'
+divMsg db 13,10,'Div = $'
+
+.code
+main proc
+
+mov ax, @data
+mov ds, ax
+
+; first number input
+mov dx, offset msgA
+mov ah, 9
+int 21h
+
+mov ah, 1
+int 21h
+sub al, 30h
+mov dl, al      ; store in DL
+
+; second number input
+mov dx, offset msgB
+mov ah, 9
+int 21h
+
+mov ah, 1
+int 21h
+sub al, 30h
+mov dh, al      ; store in DH
+
+; addition
+mov dx, offset sumMsg
+mov ah, 9
+int 21h
+
+mov al, dl
+add al, dh
+add al, 30h
+mov dl, al
+mov ah, 2
+int 21h
+
+; subtraction
+mov dx, offset diffMsg
+mov ah, 9
+int 21h
+
+mov al, dl
+sub al, dh
+add al, 30h
+mov dl, al
+mov ah, 2
+int 21h
+
+; multiplication
+mov dx, offset mulMsg
+mov ah, 9
+int 21h
+
+mov al, dl
+mov bl, dh
+mul bl
+add al, 30h
+mov dl, al
+mov ah, 2
+int 21h
+
+; division
+mov dx, offset divMsg
+mov ah, 9
+int 21h
+
+mov al, dl
+mov ah, 0
+mov bl, dh
+div bl
+add al, 30h
+mov dl, al
+mov ah, 2
+int 21h
+
+mov ah, 4Ch
+int 21h
+
+main endp
+end main
